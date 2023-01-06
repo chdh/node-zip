@@ -2,6 +2,10 @@
 
 A Node.js-based command line tool for creating ZIP files.
 
+This program is written in TypeScript and compiled to JavaScript.
+It uses the [yazl library](https://github.com/thejoshwolfe/yazl) to generate ZIP files.
+You have to install [Node.js](https://nodejs.org) in order to use it.
+
 ## Usage
 
 ```Shell
