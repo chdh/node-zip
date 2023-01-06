@@ -10,20 +10,25 @@ node nodezip.mjs "zipFileName"
    [-c ...]
 ```
 
-zipFileName
-: Output ZIP file name.
+<dl>
 
-baseDir
-: Base directory for subsequent "inclPath" and "exclPath".
+<dt>zipFileName
+<dd>Output ZIP file name.
 
-prefix
-: Output directory prefix path for within ZIP file.
+<dt>baseDir
+<dd>Base directory for subsequent <i>"inclPath"</i> and <i>"exclPath"</i>.
 
-inclPath
-: [Glob pattern](https://github.com/mrmlnc/fast-glob#pattern-syntax) for files to include.
+<dt>prefix
+<dd>Output directory prefix path for the files within the ZIP file.
 
-exclPath
-: [Glob pattern](https://github.com/mrmlnc/fast-glob#pattern-syntax) for files to exclude and for directories to ignore.
+<dt>inclPath
+<dd><a href="https://github.com/mrmlnc/fast-glob#pattern-syntax">Glob pattern</a> for files to include.
+
+<dt>exclPath
+<dd><a href="https://github.com/mrmlnc/fast-glob#pattern-syntax">Glob pattern</a> for files to exclude and for directories to ignore.
+
+</dl>
+
 
 ## Examples
 
