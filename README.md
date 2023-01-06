@@ -44,4 +44,4 @@ node nodezip.mjs backup.zip "**/*.ts" "doc"
 node nodezip.mjs backup.zip "**" -x "**/node_modules" "**/dist"
 ```
 
-Under Windows, quotes can be omitted and backslashes can be used in paths.
+Under Windows, quotes can be omitted and backslashes are allowed in paths.
