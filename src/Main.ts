@@ -1,12 +1,12 @@
 import * as Path from "node:path";
-import * as CmdLine from "./CmdLine.js";
-import * as FileCollector from "./FileCollector.js";
-import * as Zipper from "./Zipper.js";
+import * as CmdLine from "./CmdLine.ts";
+import * as FileCollector from "./FileCollector.ts";
+import * as Zipper from "./Zipper.ts";
 
 async function getFileSpec (zipSpec: CmdLine.ZipSpecGroup[]) : Promise<string[][]> {
    const fileSpec: string[][] = [];
    for (const g of zipSpec) {
-      const list = await FileCollector.getFileNames(g.baseDir, g.includes, g.excludes);
+      const list = await FileCollector.getFileNames(g.baseDir, g.includes, g.excludes, g.excludeFileSize);
       for (const f of list) {
          const diskFileName = Path.posix.join(g.baseDir, f);
          const zipFileName = Path.posix.join(g.prefix, f);

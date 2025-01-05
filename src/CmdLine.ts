@@ -1,10 +1,11 @@
-import * as FileCollector from "./FileCollector.js";
+import * as FileCollector from "./FileCollector.ts";
 
 export interface ZipSpecGroup {
-   baseDir:        string;
-   prefix:         string;                                 // output directory prefix (for within ZIP file)
-   includes:       string[];
-   excludes:       string[]; }
+   baseDir:                  string;
+   prefix:                   string;                       // output directory prefix (for within ZIP file)
+   includes:                 string[];
+   excludes:                 string[];
+   excludeFileSize:          number; }                     // exclude files equal or larger than this
 
 export var zipFileName:      string;
 export var zipSpec:          ZipSpecGroup[];
@@ -19,6 +20,7 @@ function parseZipFileSpec (args: string[]) {
    let includes: string[] = [];
    let excludes: string[] = [];
    let inclExcl = true;
+   let excludeFileSize = 0;
    let argp = 0;
    while (argp < args.length) {
       const arg = args[argp++];
@@ -43,7 +45,13 @@ function parseZipFileSpec (args: string[]) {
                   throw new Error(`Invalid prefix path specification: "${prefix}".`); }
                inclExcl = true;
                break; }
-            case "-x": {                                   // exclude paths
+            case "-xSize": {                               // exclude files equal or larger than specified size
+               flushZipSpecGroup();
+               if (argp >= args.length) {
+                  throw new Error("Missing argument for -xSize option."); }
+               excludeFileSize = Number(args[argp++]);
+               break; }
+            case "-x": {                                   // exclude paths (paths following on command line)
                inclExcl = false;
                break; }
             default: {
@@ -58,13 +66,13 @@ function parseZipFileSpec (args: string[]) {
    function flushZipSpecGroup() {
       if (includes.length == 0) {
          return; }
-      zipSpec.push({baseDir, prefix, includes, excludes});
+      zipSpec.push({baseDir, prefix, includes, excludes, excludeFileSize});
       includes = [];
       excludes = []; }}
 
 function displayHelp() {
    process.stdout.write(
-      "Syntax: nodezip zipFileName [-c baseDir] [-p prefix] inclPath [...] [-x exclPath ...] [-c ...]\n"); }
+      "Syntax: nodezip zipFileName [-c baseDir] [-p prefix] [-xSize excludeFileSize] inclPath [...] [-x exclPath ...] [-c ...]\n"); }
 
 export function init() {
    const args = process.argv.slice(2);
